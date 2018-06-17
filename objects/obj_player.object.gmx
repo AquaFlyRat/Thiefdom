@@ -27,13 +27,17 @@
             <kind>1</kind>
             <string>///init
 //movement
-grav = .25;
+grav = .4;
 hspd = 0;
 vspd = 0;
 slide = 0;
-run_speed = 3;
-jump_speed = 4;
+climb = 0;
+grab = 0;
+sheight = 3;
+run_speed = 4;
+jump_speed = 5;
 slide_speed = 1;
+climb_speed = .5;
 </string>
           </argument>
         </arguments>
@@ -61,18 +65,27 @@ var hs = (keyboard_check_direct(vk_right)-keyboard_check_direct(vk_left));
 var jmp = (keyboard_check_pressed(vk_up));
 var vs = (keyboard_check_direct(vk_down)-keyboard_check_direct(vk_up));
 if hs !=0{hspd = lerp(hspd,hs*run_speed,.1)}else{hspd = lerp(hspd,0,.5)}
+if slide || grab{hspd = 0;}
 //grav, jump
-if !slide{
+if (!slide &amp;&amp; !climb &amp;&amp; !grab){
     vspd+=grav;
 }else{
     if slide{vspd = slide_speed}
+    if grab || climb{vspd = 0}
 }
-if place_meeting(x,y+1,obj_solid) &amp;&amp; jmp{
+if (place_meeting(x,y+1,obj_solid) || place_meeting(x-(hs*8),y+1,obj_solid)) &amp;&amp; jmp{
     vspd=-jump_speed;
 }
 //slide
 if vspd&gt;0 &amp;&amp; (place_meeting(x+1,y,obj_solid) || place_meeting(x-1,y,obj_solid)){
     slide = 1;
+}
+if slide &amp;&amp; place_meeting(x,y+8,obj_solid) || (!place_meeting(x+1,y,obj_solid) &amp;&amp; !place_meeting(x-1,y,obj_solid)) || (!place_meeting(x+1,y-8,obj_solid) &amp;&amp; !place_meeting(x-1,y-8,obj_solid)){
+    slide = 0;
+}
+if slide &amp;&amp; (place_meeting(x+1,y-15,obj_solid) &amp;&amp; !place_meeting(x+1,y-16,obj_solid)) || (place_meeting(x-1,y-15,obj_solid) &amp;&amp; !place_meeting(x-1,y-16,obj_solid)){
+    slide = 0;
+    grab = 1;
 }
 if slide &amp;&amp; (jmp || (hs&gt;0 &amp;&amp; place_meeting(x-1,y,obj_solid)) || (hs&lt;0 &amp;&amp; place_meeting(x+1,y,obj_solid))){
     slide = 0;
@@ -81,17 +94,46 @@ if slide &amp;&amp; (jmp || (hs&gt;0 &amp;&amp; place_meeting(x-1,y,obj_solid)) 
     if place_meeting(x+1,y,obj_solid){hs = -1;}
     hspd=hs*run_speed;
 }
-if place_meeting(x,y+8,obj_solid) || (!place_meeting(x+1,y,obj_solid) &amp;&amp; !place_meeting(x-1,y,obj_solid)){
-    slide = 0;
+//grab
+if grab &amp;&amp; jmp{
+    grab = 0;
+    vspd = -jump_speed;
+}
+if grab &amp;&amp; ((place_meeting(x-1,y,obj_solid) &amp;&amp; hs&gt;0) || (place_meeting(x+1,y,obj_solid) &amp;&amp; hs&lt;0) || vs&gt;0){
+    grab = 0;
+    hspd = hs*run_speed;
+}
+//climb
+if place_meeting(x,y-1,obj_solid) &amp;&amp; !place_meeting(x,y+1,obj_solid){
+    climb = 1;
+}
+if climb{
+    hspd = hs*climb_speed;
+    if (place_meeting(x-1,y,obj_solid) || place_meeting(x+1,y,obj_solid)){
+        climb = 0;
+        slide = 1;
+    }
+    if vs&gt;0{climb = 0;}
 }
 //colision x
 if place_meeting(x+hspd,y,obj_solid){
-    while !place_meeting(x+sign(hspd),y,obj_solid){
-        x+=sign(hspd);
+    if vspd &gt;=0 &amp;&amp; !place_meeting(x+hspd,y-sheight,obj_solid){
+        x+=hspd;
+        while place_meeting(x,y+1,obj_solid){
+            y-=1;
+            vspd = 1;
+        }
+        ///hspd = 0;
+    }else{
+        while !place_meeting(x+sign(hspd),y,obj_solid){
+            x+=sign(hspd);
+        }
+        hspd = 0;
     }
-    hspd = 0;
 }
-x+=hspd;
+if !place_meeting(x+hspd,y,obj_solid){
+    x+=hspd;
+}
 //colision y
 if place_meeting(x,y+vspd,obj_solid){
     while !place_meeting(x,y+sign(vspd),obj_solid){
