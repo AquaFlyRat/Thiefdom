@@ -1,0 +1,30 @@
+///letter_check();
+var l = "";
+if keyboard_check_pressed(ord("A")){l+="A"}
+if keyboard_check_pressed(ord("B")){l+="B"}
+if keyboard_check_pressed(ord("C")){l+="C"}
+if keyboard_check_pressed(ord("D")){l+="D"}
+if keyboard_check_pressed(ord("E")){l+="E"}
+if keyboard_check_pressed(ord("F")){l+="F"}
+if keyboard_check_pressed(ord("G")){l+="G"}
+if keyboard_check_pressed(ord("H")){l+="H"}
+if keyboard_check_pressed(ord("I")){l+="I"}
+if keyboard_check_pressed(ord("J")){l+="J"}
+if keyboard_check_pressed(ord("K")){l+="K"}
+if keyboard_check_pressed(ord("L")){l+="L"}
+if keyboard_check_pressed(ord("M")){l+="M"}
+if keyboard_check_pressed(ord("N")){l+="N"}
+if keyboard_check_pressed(ord("O")){l+="O"}
+if keyboard_check_pressed(ord("P")){l+="P"}
+if keyboard_check_pressed(ord("Q")){l+="Q"}
+if keyboard_check_pressed(ord("R")){l+="R"}
+if keyboard_check_pressed(ord("S")){l+="S"}
+if keyboard_check_pressed(ord("T")){l+="T"}
+if keyboard_check_pressed(ord("U")){l+="U"}
+if keyboard_check_pressed(ord("V")){l+="V"}
+if keyboard_check_pressed(ord("W")){l+="W"}
+if keyboard_check_pressed(ord("X")){l+="W"}
+if keyboard_check_pressed(ord("Y")){l+="Y"}
+if keyboard_check_pressed(ord("Z")){l+="Z"}
+if keyboard_check_pressed(ord(" ")){l+=" "}
+return(string(l));
