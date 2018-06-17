@@ -7,6 +7,10 @@ var dbg_list = obj_debug.msg_list;
 ds_list_add(dbg_list, msg);
 
 if(ds_list_size(dbg_list) > (100 / fnt_height)) {
-    ds_list_delete(dbg_list, 0);
+    obj_debug.scroll_index++;
 }
+
+/*if(ds_list_size(dbg_list) > (100 / fnt_height)) {
+    ds_list_delete(dbg_list, 0);
+}*/
 
