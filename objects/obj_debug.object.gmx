@@ -100,7 +100,11 @@ image_alpha = 0;
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>var vz = obj_view.view_zoom;
+            <string>if instance_exists(obj_view){
+    var vz = obj_view.view_zoom;
+}else{
+    var vz = 1;
+}
 var mx = (mouse_x-view_xview)*vz;
 var my = (mouse_y-view_yview)*vz;
 
