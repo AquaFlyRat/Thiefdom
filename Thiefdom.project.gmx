@@ -41,12 +41,16 @@
       <script>scripts\save_val.gml</script>
       <script>scripts\check_save_exists.gml</script>
     </scripts>
+    <scripts name="debug">
+      <script>scripts\debug_message.gml</script>
+    </scripts>
   </scripts>
   <objects name="objects">
     <objects name="control">
       <object>objects\obj_init</object>
       <object>objects\obj_display</object>
       <object>objects\obj_view</object>
+      <object>objects\obj_debug</object>
     </objects>
     <objects name="menu">
       <object>objects\obj_title</object>

@@ -42,7 +42,7 @@ var texth = text_height(font, scale);
 var textx = (vw / 2) - (textw / 2);
 var texty = (vh *.75) - (texth / 2);
 
-if abs(mousex-(textx+textw/2))&lt;textw/2 &amp;&amp; (mousey &gt; texty-texth / 2 &amp;&amp; mousey &lt; texty + texth / 2) {
+if abs(mousex-(textx+textw/2))&lt;textw/2 &amp;&amp; (mousey &gt; texty-texth / 2 &amp;&amp; mousey &lt; texty + texth / 2) {   
     if check_save_exists(){
         //load
         obj_view.trans = 1;
