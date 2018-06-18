@@ -191,6 +191,7 @@ if(mx &gt; log_x &amp;&amp; mx &lt; log_x + DEBUG_LOG_WIDTH &amp;&amp; my &gt; l
           <argument>
             <kind>1</kind>
             <string>global.debug_overlay_open = !global.debug_overlay_open;
+show_debug_overlay(global.debug_overlay_open);
 </string>
           </argument>
         </arguments>
