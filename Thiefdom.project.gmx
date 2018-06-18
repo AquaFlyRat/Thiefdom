@@ -72,6 +72,11 @@
     <room>rooms\rm_menu</room>
     <room>rooms\rm_test</room>
   </rooms>
+  <constants number="3">
+    <constant name="DEBUG_LOG_HEIGHT">75</constant>
+    <constant name="DEBUG_LOG_WIDTH">200</constant>
+    <constant name="DEBUG_LOG_TXT_SCALE">0.5</constant>
+  </constants>
   <help>
     <rtf>help.rtf</rtf>
   </help>

@@ -3,7 +3,7 @@
   <spriteName>spr_ctrl</spriteName>
   <solid>0</solid>
   <visible>-1</visible>
-  <depth>10000</depth>
+  <depth>-999999</depth>
   <persistent>-1</persistent>
   <parentName>&lt;undefined&gt;</parentName>
   <maskName>&lt;undefined&gt;</maskName>
@@ -100,15 +100,17 @@ image_alpha = 0;
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>if instance_exists(obj_view){
+            <string>if (instance_exists(obj_view)) {
     var vz = obj_view.view_zoom;
-}else{
+} else {
     var vz = 1;
 }
-var mx = (mouse_x-view_xview)*vz;
-var my = (mouse_y-view_yview)*vz;
 
-if(mx &gt; 10 &amp;&amp; mx &lt; 210 &amp;&amp; my &gt; 10 &amp;&amp; my &lt; 110) {
+var mx = (mouse_x - view_xview) * vz;
+var my = (mouse_y - view_yview) * vz;
+var log_x = 10, log_y = 10;
+
+if(mx &gt; log_x &amp;&amp; mx &lt; log_x + DEBUG_LOG_WIDTH &amp;&amp; my &gt; log_y &amp;&amp; my &lt; log_y + DEBUG_LOG_HEIGHT) {
     self.is_in_focus = true;
     debug_message("Focus!");
 } else {
@@ -139,30 +141,32 @@ if(mx &gt; 10 &amp;&amp; mx &lt; 210 &amp;&amp; my &gt; 10 &amp;&amp; my &lt; 11
             <kind>1</kind>
             <string>if(global.debug_overlay_open) {
     var msg_y_pos = 20;
-    var scale = 0.75;
-    var fnt_height = spr_font_a.sprite_height * scale; 
+    var fnt_height = spr_font_a.sprite_height * DEBUG_LOG_TXT_SCALE; 
     var precol = draw_get_colour();
-    
+    draw_set_alpha(0.5);
     if(self.is_in_focus) {
-        draw_set_color(c_black);
-    } else {
         draw_set_color(c_dkgray);
+    } else {
+        draw_set_color(c_gray);
     }
     
-    var buffer_lines_no = (100 / fnt_height);
+    var buffer_lines_no = (DEBUG_LOG_HEIGHT / fnt_height);
     
     var start_index = self.scroll_index;
     var end_index = ds_list_size(self.msg_list);
     if(self.scroll_index + buffer_lines_no - 1 &lt; ds_list_size(self.msg_list)) {
-        end_index = start_index + buffer_lines_no - 1;
+        end_index = start_index + buffer_lines_no - 2;
     }
     
-    draw_rectangle(10, 10, 210, 110, false);
-    for(var i = self.scroll_index; i &lt; end_index; i++) {
+    var log_x = 10, log_y = 10;
+    
+    draw_rectangle(log_x, log_y, log_x + DEBUG_LOG_WIDTH, log_y + DEBUG_LOG_HEIGHT, false);
+    for(var i = start_index; i &lt; end_index; i++) {
         var msg = ds_list_find_value(self.msg_list, i);
-        text_draw(20, msg_y_pos, msg, spr_font_a, c_white, scale, 1.0);
+        text_draw(20, msg_y_pos, msg, spr_font_a, c_white, DEBUG_LOG_TXT_SCALE, 1.0);
         msg_y_pos += fnt_height;
     }
+    draw_set_alpha(1.0);
 }
 </string>
           </argument>
@@ -187,55 +191,6 @@ if(mx &gt; 10 &amp;&amp; mx &lt; 210 &amp;&amp; my &gt; 10 &amp;&amp; my &lt; 11
           <argument>
             <kind>1</kind>
             <string>global.debug_overlay_open = !global.debug_overlay_open;
-</string>
-          </argument>
-        </arguments>
-      </action>
-    </event>
-    <event eventtype="10" enumb="40">
-      <action>
-        <libid>1</libid>
-        <id>603</id>
-        <kind>7</kind>
-        <userelative>0</userelative>
-        <isquestion>0</isquestion>
-        <useapplyto>-1</useapplyto>
-        <exetype>2</exetype>
-        <functionname></functionname>
-        <codestring></codestring>
-        <whoName>self</whoName>
-        <relative>0</relative>
-        <isnot>0</isnot>
-        <arguments>
-          <argument>
-            <kind>1</kind>
-            <string>self.scroll_index++;
-
-</string>
-          </argument>
-        </arguments>
-      </action>
-    </event>
-    <event eventtype="10" enumb="38">
-      <action>
-        <libid>1</libid>
-        <id>603</id>
-        <kind>7</kind>
-        <userelative>0</userelative>
-        <isquestion>0</isquestion>
-        <useapplyto>-1</useapplyto>
-        <exetype>2</exetype>
-        <functionname></functionname>
-        <codestring></codestring>
-        <whoName>self</whoName>
-        <relative>0</relative>
-        <isnot>0</isnot>
-        <arguments>
-          <argument>
-            <kind>1</kind>
-            <string>if(self.scroll_index &gt; 0) {
-    self.scroll_index--;
-}
 </string>
           </argument>
         </arguments>
