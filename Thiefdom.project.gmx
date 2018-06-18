@@ -49,6 +49,9 @@
     <scripts name="debug">
       <script>scripts\debug_message.gml</script>
     </scripts>
+    <scripts name="net">
+      <script>scripts\create_server.gml</script>
+    </scripts>
   </scripts>
   <objects name="objects">
     <objects name="control">
