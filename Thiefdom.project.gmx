@@ -63,6 +63,7 @@
     <objects name="menu">
       <object>objects\obj_title</object>
       <object>objects\btn_start</object>
+      <object>objects\btn_start_server</object>
     </objects>
     <objects name="main">
       <object>objects\obj_stair</object>

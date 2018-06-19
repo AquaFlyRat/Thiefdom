@@ -112,10 +112,8 @@ var log_x = 10, log_y = 10;
 
 if(mx &gt; log_x &amp;&amp; mx &lt; log_x + DEBUG_LOG_WIDTH &amp;&amp; my &gt; log_y &amp;&amp; my &lt; log_y + DEBUG_LOG_HEIGHT) {
     self.is_in_focus = true;
-    debug_message("Focus!");
 } else {
     self.is_in_focus = false;
-    debug_message("Not focused!");
 }
 </string>
           </argument>
