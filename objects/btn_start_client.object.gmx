@@ -49,7 +49,7 @@
           <argument>
             <kind>1</kind>
             <string>/// clickable
-var text = "start server";
+var text = "start client";
 var font = spr_font_b;
 var scale = 1;
 
@@ -64,15 +64,12 @@ var texth = text_height(font, scale);
 
 var textx = (vw / 2) - (textw / 2);
 var texty = (vh *.75) - (texth / 2);
-texty += text_height(font, scale) * 1.4;
+texty += text_height(font, scale) * 2.6;
 
 if (abs(mousex-(textx+textw/2))&lt;textw/2 &amp;&amp; (mousey &gt; texty-texth / 2 &amp;&amp; mousey &lt; texty + texth / 2)) {   
     if(not self.started) {
-        debug_message("Starting server...");
-        var server_id = create_server();
-        
-        var localserver_obj = instance_create(0,0,obj_local_server);
-        localserver_obj.server_id = server_id;
+        debug_message("Starting local client");
+        connect_to_server("127.0.0.1");
     }
     
     self.started = true;
@@ -101,7 +98,7 @@ if (abs(mousex-(textx+textw/2))&lt;textw/2 &amp;&amp; (mousey &gt; texty-texth /
             <kind>1</kind>
             <string>///draw
 image_alpha = 0;
-var text = "start server"
+var text = "start client"
 
 var font = spr_font_b;
 var scale = 1;
@@ -117,7 +114,7 @@ var texth = text_height(font, scale);
 
 var textx = (vw / 2) - (textw / 2);
 var texty = (vh *.75) - (texth / 2);
-texty += text_height(font, scale) * 1.4;
+texty += text_height(font, scale) * 2.6;
 
 if abs(mousex-(textx+textw/2))&lt;textw/2 &amp;&amp; (mousey &gt; texty-texth / 2 &amp;&amp; mousey &lt; texty + texth / 2) {
     var col = c_white;
