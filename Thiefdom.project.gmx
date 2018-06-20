@@ -12,6 +12,12 @@
       <sprite>sprites\spr_font_b</sprite>
     </sprites>
     <sprites name="main">
+      <sprites name="player">
+        <sprite>sprites\spr_player_idle</sprite>
+        <sprite>sprites\spr_player_run</sprite>
+        <sprite>sprites\spr_player_jump</sprite>
+        <sprite>sprites\spr_player_fall</sprite>
+      </sprites>
       <sprite>sprites\spr_player_test</sprite>
       <sprite>sprites\spr_solid_test</sprite>
       <sprite>sprites\spr_stair_test</sprite>
