@@ -54,6 +54,8 @@
     <instance objName="obj_view" x="0" y="0" name="inst_AE49C712" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
     <instance objName="obj_title" x="0" y="32" name="inst_93B5BACF" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
     <instance objName="btn_start" x="16" y="32" name="inst_F2922FAC" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
+    <instance objName="btn_start_server" x="32" y="32" name="inst_3A81F4F0" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
+    <instance objName="btn_start_client" x="48" y="32" name="inst_4C11AE69" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
   </instances>
   <tiles/>
   <PhysicsWorld>0</PhysicsWorld>

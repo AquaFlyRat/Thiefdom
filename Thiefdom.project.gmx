@@ -55,6 +55,10 @@
     <scripts name="debug">
       <script>scripts\debug_message.gml</script>
     </scripts>
+    <scripts name="net">
+      <script>scripts\create_server.gml</script>
+      <script>scripts\connect_to_server.gml</script>
+    </scripts>
   </scripts>
   <objects name="objects">
     <objects name="control">
@@ -66,11 +70,18 @@
     <objects name="menu">
       <object>objects\obj_title</object>
       <object>objects\btn_start</object>
+      <object>objects\btn_start_server</object>
+      <object>objects\btn_start_client</object>
     </objects>
     <objects name="main">
       <object>objects\obj_stair</object>
       <object>objects\obj_solid</object>
       <object>objects\obj_player</object>
+    </objects>
+    <objects name="net">
+      <objects name="server">
+        <object>objects\obj_local_server</object>
+      </objects>
     </objects>
   </objects>
   <rooms name="rooms">
@@ -78,6 +89,12 @@
     <room>rooms\rm_menu</room>
     <room>rooms\rm_test</room>
   </rooms>
+  <constants number="4">
+    <constant name="NET_PORT">6510</constant>
+    <constant name="DEBUG_LOG_HEIGHT">100</constant>
+    <constant name="DEBUG_LOG_WIDTH">200</constant>
+    <constant name="DEBUG_LOG_TXT_SCALE">0.5</constant>
+  </constants>
   <help>
     <rtf>help.rtf</rtf>
   </help>
