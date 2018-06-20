@@ -26,6 +26,7 @@
           <argument>
             <kind>1</kind>
             <string>global.debug_overlay_open = true;
+show_debug_overlay(global.debug_overlay_open);
 msg_list = ds_list_create();
 is_in_focus = false;
 scroll_index = 0;

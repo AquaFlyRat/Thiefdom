@@ -1,4 +1,4 @@
-///connect_to_server(addr)
+/// connect_to_server(addr)
 
 var addr = argument0;
 var client_socket = network_create_socket(network_socket_tcp);

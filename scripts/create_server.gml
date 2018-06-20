@@ -1,3 +1,4 @@
+/// create_server()
 var MAX_CLIENTS = 4;
 
 debug_message("Started server on port " + string(NET_PORT));

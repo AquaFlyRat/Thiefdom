@@ -1,3 +1,4 @@
+/// debug_message(msg)
 var msg = argument0;
 
 var fnt_height = spr_font_a.sprite_height * DEBUG_LOG_TXT_SCALE;

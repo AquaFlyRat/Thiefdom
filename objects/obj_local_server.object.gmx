@@ -57,7 +57,7 @@ server_id = noone;
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>// The socket that is recieving the data
+            <string>// The socket that is recieving the data (aka the socket the server is on)
 var socket_id = ds_map_find_value(async_load, "id");
 
 if(socket_id == self.server_id) {
@@ -65,6 +65,12 @@ if(socket_id == self.server_id) {
     switch(type) {
     case network_type_connect:
         debug_message("Client connected!");
+        break;
+    case network_type_disconnect:
+        debug_message("Client disconnected!");
+        break;
+    case network_type_data:
+        // Handle incomming data
         break;
     }
 }
