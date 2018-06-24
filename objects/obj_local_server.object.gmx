@@ -35,6 +35,8 @@ This object should only exist on the server machine and stores the ID of the ser
 image_alpha = 0;
 
 server_id = noone;
+
+debug_message(hash_str("Hello World!"));
 </string>
           </argument>
         </arguments>
@@ -63,13 +65,11 @@ var socket_id = ds_map_find_value(async_load, "id");
 if(socket_id == self.server_id) {
     var type = ds_map_find_value(async_load, "type");
     switch(type) {
-    case network_type_connect:
-        debug_message("Client connected!");
-        break;
-    case network_type_disconnect:
-        debug_message("Client disconnected!");
-        break;
     case network_type_data:
+        debug_message("Server recieved data!");
+        var buffer = async_load[? "buffer"];
+        var dat = buffer_read(buffer, buffer_string);
+        debug_message("Data: " + dat);
         // Handle incomming data
         break;
     }
