@@ -164,6 +164,7 @@ if(mx &gt; log_x &amp;&amp; mx &lt; log_x + DEBUG_LOG_WIDTH &amp;&amp; my &gt; l
         var msg = ds_list_find_value(self.msg_list, i);
         text_draw(20, msg_y_pos, msg, spr_font_a, c_white, DEBUG_LOG_TXT_SCALE, 1.0);
         msg_y_pos += fnt_height;
+        
     }
     draw_set_alpha(1.0);
 }

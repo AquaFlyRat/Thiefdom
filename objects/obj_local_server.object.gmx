@@ -37,6 +37,7 @@ image_alpha = 0;
 server_id = noone;
 
 debug_message(hash_str("Hello World!"));
+debug_message("ReeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeAD");
 </string>
           </argument>
         </arguments>
