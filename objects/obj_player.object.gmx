@@ -168,19 +168,33 @@ y+=vspd;
 if hspd!=0{
     image_xscale = sign(hspd);
 }
+var spec = 0;
+if slide || climb || grab{spec = 1;}
 if !place_meeting(x,y+1,obj_solid){
-    if vspd&lt;=0{
-        sprite_index = spr_player_jumphang;
-        animpause = 1;
-    }else{
-        if (sprite_index !=spr_player_fall){ 
-            sprite_index = spr_player_fall;
-            image_index = 0;
-        }
-        if (floor(image_index)&lt;image_number-1){
-            image_speed = .25;
+    if !spec{
+        if vspd&lt;=0 || !collision_line(x,y,x,y+120,obj_solid,0,1){
+            sprite_index = spr_player_jumphang;
+            animpause = 1;
         }else{
-            image_speed = 0;
+            if (sprite_index !=spr_player_fall){ 
+                sprite_index = spr_player_fall;
+                image_index = 0;
+            }
+            if (floor(image_index)&lt;image_number-1){
+                image_speed = .25;
+            }else{
+                image_speed = 0;
+            }
+        }
+    }else{
+        if slide{
+            sprite_index = spr_player_slide;
+        }
+        if climb{
+            sprite_index = spr_player_climb;
+        }
+        if grab{
+            sprite_index = spr_player_grab;
         }
     }
 }else{

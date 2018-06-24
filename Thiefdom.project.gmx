@@ -16,7 +16,10 @@
         <sprite>sprites\spr_player_idle</sprite>
         <sprite>sprites\spr_player_run</sprite>
         <sprite>sprites\spr_player_jumphang</sprite>
+        <sprite>sprites\spr_player_slide</sprite>
         <sprite>sprites\spr_player_fall</sprite>
+        <sprite>sprites\spr_player_climb</sprite>
+        <sprite>sprites\spr_player_grab</sprite>
       </sprites>
       <sprite>sprites\spr_player_test</sprite>
       <sprite>sprites\spr_solid_test</sprite>
