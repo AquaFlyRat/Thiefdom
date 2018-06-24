@@ -90,11 +90,14 @@ if(socket_id == self.server_id) {
     var type = ds_map_find_value(async_load, "type");
     switch(type) {
     case network_type_data:
-        debug_message("Server recieved data!");
-        var buffer = async_load[? "buffer"];
-        var dat = buffer_read(buffer, buffer_string);
-        debug_message("Data: " + dat);
-        // Handle incomming data
+        var in_buffer = async_load[? "buffer"];
+        var header_uid = buffer_read(in_buffer, buffer_u32);
+        
+        // Only process packets intented for us
+        if(header_uid == NET_PACKET_UID) {
+            // Process packet
+        }
+        
         break;
     }
 }
