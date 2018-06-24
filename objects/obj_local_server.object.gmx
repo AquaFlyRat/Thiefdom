@@ -37,7 +37,7 @@ image_alpha = 0;
 server_id = noone;
 
 debug_message(hash_str("Hello World!"));
-debug_message("ReeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeAD");
+debug_message("This is a test to see if line wrapping works.");
 </string>
           </argument>
         </arguments>
