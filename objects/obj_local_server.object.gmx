@@ -35,9 +35,6 @@ This object should only exist on the server machine and stores the ID of the ser
 image_alpha = 0;
 
 server_id = noone;
-
-debug_message(hash_str("Hello World!"));
-debug_message("This is a test to see if line wrapping works.");
 </string>
           </argument>
         </arguments>
@@ -96,6 +93,14 @@ if(socket_id == self.server_id) {
         // Only process packets intented for us
         if(header_uid == NET_PACKET_UID) {
             // Process packet
+            
+            var packet_type = buffer_read(in_buffer, buffer_u16);
+            switch(packet_type) {
+            case NET_PCK_CONNECTION_REQUEST:
+                show_message("Server has recieved a connection request!");
+                game_end();
+                break;
+            }
         }
         
         break;

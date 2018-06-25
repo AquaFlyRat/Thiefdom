@@ -69,7 +69,11 @@ texty += text_height(font, scale) * 2.6;
 if (abs(mousex-(textx+textw/2))&lt;textw/2 &amp;&amp; (mousey &gt; texty-texth / 2 &amp;&amp; mousey &lt; texty + texth / 2)) {   
     if(not self.started) {
         debug_message("Starting local client");
-        connect_to_server("127.0.0.1");
+        var client_instance = instance_create(0,0,obj_local_client);
+        client_instance.socket_id = create_client_socket();
+        debug_message("Client Socket: " + string(client_instance.socket_id));
+        
+        client_start_requesting_connection(client_instance);
     }
     
     self.started = true;
