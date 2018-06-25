@@ -30,6 +30,9 @@ global.opt = 0;
 global.pause = 0;
 global.screenpause = 0;
 global.newgen = 1;
+
+// Initalise the CRC32 lookup table
+crc32_init();
 </string>
           </argument>
         </arguments>
