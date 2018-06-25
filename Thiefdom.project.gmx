@@ -107,7 +107,7 @@
     <constant name="NET_PACKET_UID">1337321614</constant>
     <constant name="NET_SERVER_PORT">6510</constant>
     <constant name="DEBUG_LOG_HEIGHT">100</constant>
-    <constant name="DEBUG_LOG_WIDTH">200</constant>
+    <constant name="DEBUG_LOG_WIDTH">250</constant>
     <constant name="DEBUG_LOG_TXT_SCALE">0.5</constant>
     <constant name="NET_CLIENT_PORT">6511</constant>
   </constants>

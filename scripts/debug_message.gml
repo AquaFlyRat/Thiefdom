@@ -3,7 +3,7 @@ var msg = argument0;
 
 var fnt_height = spr_font_a.sprite_height * DEBUG_LOG_TXT_SCALE;
 var dbg_list = obj_debug.msg_list;
-var max_chars = (DEBUG_LOG_WIDTH / (spr_font_a.sprite_width * DEBUG_LOG_TXT_SCALE)) + 6;
+var max_chars = (DEBUG_LOG_WIDTH / (spr_font_a.sprite_width * DEBUG_LOG_TXT_SCALE)) + 10;
 var multiline = string_length(msg) > max_chars;
 
 var line_start_prefix = "-- ";
