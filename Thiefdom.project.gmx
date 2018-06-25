@@ -21,12 +21,17 @@
         <sprite>sprites\spr_player_climb</sprite>
         <sprite>sprites\spr_player_grab</sprite>
       </sprites>
+      <sprite>sprites\spr_box</sprite>
+      <sprite>sprites\spr_barrel</sprite>
       <sprite>sprites\spr_player_test</sprite>
       <sprite>sprites\spr_solid_test</sprite>
       <sprite>sprites\spr_stair_test</sprite>
     </sprites>
   </sprites>
-  <backgrounds name="background"/>
+  <backgrounds name="background">
+    <background>background\bg_bridge</background>
+    <background>background\bg_solid</background>
+  </backgrounds>
   <paths name="paths"/>
   <scripts name="scripts">
     <scripts name="text">

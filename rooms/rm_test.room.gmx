@@ -115,9 +115,6 @@
     <instance objName="obj_solid" x="128" y="192" name="inst_25EFD8A4" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
     <instance objName="obj_solid" x="128" y="208" name="inst_873620B5" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
     <instance objName="obj_solid" x="144" y="208" name="inst_F5AAA8DD" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
-    <instance objName="obj_stair" x="192" y="208" name="inst_BB4D97E4" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
-    <instance objName="obj_stair" x="176" y="192" name="inst_1CB77447" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
-    <instance objName="obj_stair" x="160" y="176" name="inst_6A004053" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
     <instance objName="obj_solid" x="128" y="176" name="inst_CFC597B7" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
     <instance objName="obj_solid" x="144" y="192" name="inst_7B9FA1E1" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
     <instance objName="obj_solid" x="160" y="208" name="inst_5DB59019" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
