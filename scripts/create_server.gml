@@ -8,3 +8,5 @@ var server_id = network_create_server_raw(network_socket_udp, NET_SERVER_PORT, M
 if(server_id < 0) {
     debug_message("ERROR: Could not create server");
 }
+debug_message("Server socket: " + string(server_id));
+return server_id;

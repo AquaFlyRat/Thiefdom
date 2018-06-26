@@ -39,6 +39,7 @@ for(var i = 0; i &lt; NET_MAX_CLIENTS; i++) {
     clients_list[i] = noone;
 }
 
+send_buffer = buffer_create(1024, buffer_fixed, 1);
 </string>
           </argument>
         </arguments>
@@ -101,8 +102,27 @@ if(socket_id == self.server_id) {
             var packet_type = buffer_read(in_buffer, buffer_u16);
             switch(packet_type) {
             case NET_PCK_CONNECTION_REQUEST:
-                show_message("Server has recieved a connection request!");
-                game_end();
+                var client_ip = async_load[? "ip"];
+                var client_port = async_load[? "port"];            
+                
+                var i = server_find_client_slot(self, client_ip);
+                
+                // Determine the type of response we will be sending back to the client
+               
+                var msg_type = NET_PCK_CONNECTION_ACCEPTED;
+                
+                if(i &gt; 0) {
+                    var client_obj = create_object(obj_server_client);
+                    client_obj.client_ip = client_ip;
+                    client_obj.client_port = client_port;
+                
+                    self.clients_list[i] = client_obj;
+                } else {
+                    msg_type = NET_PCK_CONNECTION_REJECTED;
+                }
+                                
+                self.send_buffer = prepare_packet_buffer(self.send_buffer, msg_type);
+                network_send_udp(self.server_id, client_ip, client_port, self.send_buffer, 6);
                 break;
             }
         }

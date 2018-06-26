@@ -61,11 +61,57 @@ if(state == NET_CLIENT_REQUESTING_CONNECTION) {
     buffer_write(self.send_buffer, buffer_u32, NET_PACKET_UID);
     buffer_write(self.send_buffer, buffer_u16, NET_PCK_CONNECTION_REQUEST);
     
-    udp_send(self.socket_id, self.send_buffer, 6);
+    udp_send_to_server(self.socket_id, self.send_buffer, 6);
     
     alarm[0] = room_speed * (1 / NET_CLIENT_UPDATE_SPD);
 }
 
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="7" enumb="68">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>// The socket that is recieving the data (aka the socket the server is on)
+var socket_id = ds_map_find_value(async_load, "id");
+
+if(socket_id == self.socket_id) {
+    var type = async_load[? "type"];
+    switch(type) {
+    case network_type_data:
+        var in_buffer = async_load[? "buffer"];
+        var header_uid = buffer_read(in_buffer, buffer_u32);
+        
+        if(header_uid == NET_PACKET_UID) {
+            var msg_type = buffer_read(in_buffer, buffer_u16);
+            switch(msg_type) {
+            case NET_PCK_CONNECTION_ACCEPTED:
+                show_message("Client connection request accepted!");
+                break;
+            case NET_PCK_CONNECTION_REJECTED:
+                show_message("Client connection request rejected!");
+            }
+        }
+        
+        break;
+    }
+}
 </string>
           </argument>
         </arguments>

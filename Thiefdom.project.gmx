@@ -68,12 +68,14 @@
     <scripts name="net">
       <scripts name="server">
         <script>scripts\create_server.gml</script>
+        <script>scripts\server_find_client_slot.gml</script>
       </scripts>
       <scripts name="client">
         <script>scripts\create_client_socket.gml</script>
-        <script>scripts\udp_send.gml</script>
+        <script>scripts\udp_send_to_server.gml</script>
         <script>scripts\client_start_requesting_connection.gml</script>
       </scripts>
+      <script>scripts\prepare_packet_buffer.gml</script>
     </scripts>
     <script>scripts\create_object.gml</script>
   </scripts>
@@ -98,6 +100,7 @@
     <objects name="net">
       <objects name="server">
         <object>objects\obj_local_server</object>
+        <object>objects\obj_server_client</object>
       </objects>
       <objects name="client">
         <object>objects\obj_local_client</object>
@@ -119,8 +122,8 @@
     <constant name="NET_PACKET_UID">1337321614</constant>
     <constant name="NET_SERVER_PORT">6510</constant>
     <constant name="NET_PCK_CONNECTION_REQUEST">11</constant>
-    <constant name="NET_PCK_CHALLENGE_REQUEST">12</constant>
-    <constant name="NET_PCK_CHALLENGE_RESPONSE">13</constant>
+    <constant name="NET_PCK_CONNECTION_ACCEPTED">12</constant>
+    <constant name="NET_PCK_CONNECTION_REJECTED">13</constant>
     <constant name="NET_CLIENT_REQUESTING_CONNECTION">21</constant>
     <constant name="NET_CLIENT_CONNECTED">22</constant>
     <constant name="NET_CLIENT_DISCONNECTED">23</constant>

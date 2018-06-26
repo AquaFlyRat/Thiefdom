@@ -71,7 +71,6 @@ if (abs(mousex-(textx+textw/2))&lt;textw/2 &amp;&amp; (mousey &gt; texty-texth /
         debug_message("Starting local client");
         var client_instance = create_object(obj_local_client);
         client_instance.socket_id = create_client_socket();
-        debug_message("Client Socket: " + string(client_instance.socket_id));
         
         client_start_requesting_connection(client_instance);
     }
