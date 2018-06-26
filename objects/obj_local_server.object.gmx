@@ -28,13 +28,17 @@
             <string>/// Setup the object
 
 /*
-This object should only exist on the server machine and stores the ID of the server
+This object should only exist on the server machine and stores the socket ID of the server
 (returned by the `create_server()`)
 */
 
-image_alpha = 0;
-
 server_id = noone;
+
+// Create the clients list, ready for `NET_MAX_CLIENTS` number of clients
+for(var i = 0; i &lt; NET_MAX_CLIENTS; i++) {
+    clients_list[i] = noone;
+}
+
 </string>
           </argument>
         </arguments>

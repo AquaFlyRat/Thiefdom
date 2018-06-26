@@ -25,9 +25,7 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>image_alpha = 0;
-
-socket_id = noone;
+            <string>socket_id = noone;
 state = NET_CLIENT_DISCONNECTED;
 
 send_buffer = buffer_create(1024, buffer_fixed, 1);

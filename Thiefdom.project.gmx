@@ -75,6 +75,7 @@
         <script>scripts\client_start_requesting_connection.gml</script>
       </scripts>
     </scripts>
+    <script>scripts\create_object.gml</script>
   </scripts>
   <objects name="objects">
     <objects name="control">
@@ -108,7 +109,8 @@
     <room>rooms\rm_menu</room>
     <room>rooms\rm_test</room>
   </rooms>
-  <constants number="13">
+  <constants number="14">
+    <constant name="NET_MAX_CLIENTS">3</constant>
     <constant name="NET_CLIENT_UPDATE_SPD">15</constant>
     <constant name="DEBUG_LOG_HEIGHT">100</constant>
     <constant name="DEBUG_LOG_TXT_SCALE">0.5</constant>

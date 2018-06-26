@@ -71,7 +71,7 @@ if (abs(mousex-(textx+textw/2))&lt;textw/2 &amp;&amp; (mousey &gt; texty-texth /
         debug_message("Starting server...");
         var server_id = create_server();
         
-        var localserver_obj = instance_create(0,0,obj_local_server);
+        var localserver_obj = create_object(obj_local_server);
         localserver_obj.server_id = server_id;
     }
     
