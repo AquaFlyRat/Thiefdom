@@ -103,9 +103,11 @@ if(socket_id == self.socket_id) {
             switch(msg_type) {
             case NET_PCK_CONNECTION_ACCEPTED:
                 show_message("Client connection request accepted!");
+                self.state = NET_CLIENT_CONNECTED;
                 break;
             case NET_PCK_CONNECTION_REJECTED:
                 show_message("Client connection request rejected!");
+                self.state = NET_CLIENT_DISCONNECTED;
             }
         }
         

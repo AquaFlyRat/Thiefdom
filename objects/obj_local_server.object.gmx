@@ -108,7 +108,7 @@ if(socket_id == self.server_id) {
                 var i = server_find_client_slot(self, client_ip);
                 
                 // Determine the type of response we will be sending back to the client
-               
+                // e.g. If there is free space in the clients array then accept the request, otherwise reject it.
                 var msg_type = NET_PCK_CONNECTION_ACCEPTED;
                 
                 if(i &gt; 0) {
@@ -122,7 +122,12 @@ if(socket_id == self.server_id) {
                 }
                                 
                 self.send_buffer = prepare_packet_buffer(self.send_buffer, msg_type);
-                network_send_udp(self.server_id, client_ip, client_port, self.send_buffer, 6);
+                
+                // Lets just send this packet 5 times to increase the chances that one packet gets through.
+                // TODO: We should probably handle this situation properly.
+                repeat(5) {
+                    network_send_udp(self.server_id, client_ip, client_port, self.send_buffer, 6);
+                }
                 break;
             }
         }
