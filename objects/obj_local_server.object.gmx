@@ -41,6 +41,8 @@ for(var i = 0; i &lt; NET_MAX_CLIENTS; i++) {
 
 send_buffer = buffer_create(1024, buffer_fixed, 1);
 
+// This starts the alarm that runs once a second to check for a client timeout
+// e.g a message from the client has not been recieved for 5 seconds or more.
 alarm[0] = room_speed;
 </string>
           </argument>
@@ -137,26 +139,30 @@ if(socket_id == self.server_id) {
         
         // Only process packets intented for us
         if(header_uid == NET_PACKET_UID) {
-            // Process packet
+            var client_ip = async_load[? "ip"];
+            var client_port = async_load[? "port"]; 
             
             var packet_type = buffer_read(in_buffer, buffer_u16);
             switch(packet_type) {
             case NET_PCK_CONNECTION_REQUEST:
-                var client_ip = async_load[? "ip"];
-                var client_port = async_load[? "port"];            
-                
                 var i = server_find_client_slot(self, client_ip);
                 debug_message(string(i));
                     
                 // Determine the type of response we will be sending back to the client
-                // e.g. If there is free space in the clients array then accept the request, otherwise reject it.
+                // e.g. If there is free space in the clients array (or the client is already in the array)
+                // then accept the request, otherwise reject it.
                 var msg_type = NET_PCK_CONNECTION_ACCEPTED;
                 
                 if(i &gt;= 0) {
-                    var client_obj = create_object(obj_server_client);
-                    client_obj.client_ip = client_ip;
-                    client_obj.client_port = client_port;
-                    self.clients_list[i] = client_obj;
+                    // This is taking into account that we may have already created the client object
+                    // (remembering that if the incoming client is already in the array then we should still return
+                    //  NET_PCK_CONNECTION_ACCEPTED)
+                    if(self.clients_list[i] == noone) {
+                        var client_obj = create_object(obj_server_client);
+                        client_obj.client_ip = client_ip;
+                        client_obj.client_port = client_port;
+                        self.clients_list[i] = client_obj;
+                    }
                 } else {
                     msg_type = NET_PCK_CONNECTION_REJECTED;
                 }
@@ -170,13 +176,9 @@ if(socket_id == self.server_id) {
                 }
                 break;
             default:
-                var client_ip = async_load[? "ip"];
-                var client_port = async_load[? "port"];
-                
                 var i = server_find_client_slot(self, client_ip);
                 var client = self.clients_list[i];
                 client.time_since_last_packet = 0;
-                
                 break;
             }
         }
