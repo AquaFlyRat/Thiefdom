@@ -102,11 +102,12 @@ if(socket_id == self.socket_id) {
             var msg_type = buffer_read(in_buffer, buffer_u16);
             switch(msg_type) {
             case NET_PCK_CONNECTION_ACCEPTED:
-                show_message("Client connection request accepted!");
+                if(self.state != NET_CLIENT_CONNECTED)
+                    debug_message("Client connection request accepted!");
                 self.state = NET_CLIENT_CONNECTED;
                 break;
             case NET_PCK_CONNECTION_REJECTED:
-                show_message("Client connection request rejected!");
+                debug_message("Client connection request rejected!");
                 self.state = NET_CLIENT_DISCONNECTED;
             }
         }

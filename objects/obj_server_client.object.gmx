@@ -37,6 +37,7 @@ This object should only ever be created/exist on the server game.
 client_port = noone;
 client_ip = noone;
 
+time_since_last_packet = 0;
 </string>
           </argument>
         </arguments>

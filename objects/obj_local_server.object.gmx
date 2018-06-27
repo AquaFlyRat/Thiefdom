@@ -40,6 +40,8 @@ for(var i = 0; i &lt; NET_MAX_CLIENTS; i++) {
 }
 
 send_buffer = buffer_create(1024, buffer_fixed, 1);
+
+alarm[0] = room_speed;
 </string>
           </argument>
         </arguments>
@@ -63,6 +65,44 @@ send_buffer = buffer_create(1024, buffer_fixed, 1);
           <argument>
             <kind>1</kind>
             <string>network_destroy(self.server_id);
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="2" enumb="0">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>// Should run once a second.
+
+for(var i = 0; i &lt; array_length_1d(self.clients_list); i++) {
+    var client = self.clients_list[i];
+    
+    if(client != noone) {
+        client.time_since_last_packet = client.time_since_last_packet + 1;
+        debug_message(string(client.time_since_last_packet));
+        if(client.time_since_last_packet &gt;= NET_TIMEOUT_SECONDS) {
+            show_message("Client disconnected - port: " + string(client.client_port));
+            self.clients_list[i] = noone;
+        }
+    }
+}
+
+alarm[0] = room_speed;
 </string>
           </argument>
         </arguments>
@@ -106,16 +146,16 @@ if(socket_id == self.server_id) {
                 var client_port = async_load[? "port"];            
                 
                 var i = server_find_client_slot(self, client_ip);
-                
+                debug_message(string(i));
+                    
                 // Determine the type of response we will be sending back to the client
                 // e.g. If there is free space in the clients array then accept the request, otherwise reject it.
                 var msg_type = NET_PCK_CONNECTION_ACCEPTED;
                 
-                if(i &gt; 0) {
+                if(i &gt;= 0) {
                     var client_obj = create_object(obj_server_client);
                     client_obj.client_ip = client_ip;
                     client_obj.client_port = client_port;
-                
                     self.clients_list[i] = client_obj;
                 } else {
                     msg_type = NET_PCK_CONNECTION_REJECTED;
@@ -128,6 +168,15 @@ if(socket_id == self.server_id) {
                 repeat(5) {
                     network_send_udp(self.server_id, client_ip, client_port, self.send_buffer, 6);
                 }
+                break;
+            default:
+                var client_ip = async_load[? "ip"];
+                var client_port = async_load[? "port"];
+                
+                var i = server_find_client_slot(self, client_ip);
+                var client = self.clients_list[i];
+                client.time_since_last_packet = 0;
+                
                 break;
             }
         }

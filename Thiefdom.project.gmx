@@ -112,10 +112,11 @@
     <room>rooms\rm_menu</room>
     <room>rooms\rm_test</room>
   </rooms>
-  <constants number="14">
+  <constants number="15">
     <constant name="NET_MAX_CLIENTS">3</constant>
     <constant name="NET_CLIENT_UPDATE_SPD">15</constant>
     <constant name="DEBUG_LOG_HEIGHT">100</constant>
+    <constant name="NET_TIMEOUT_SECONDS">5</constant>
     <constant name="DEBUG_LOG_TXT_SCALE">0.5</constant>
     <constant name="DEBUG_LOG_WIDTH">250</constant>
     <constant name="NET_CLIENT_PORT">6511</constant>

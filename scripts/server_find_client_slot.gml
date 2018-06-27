@@ -10,15 +10,15 @@ If the clients list is full then -1 is returned.
 var server_obj = argument0;
 var client_ip = argument1;
 
-var out_index = -1;
 for(var i = 0; i < array_length_1d(server_obj.clients_list); i++) {
     if(server_obj.clients_list[i] != noone) {
         if(server_obj.clients_list[i].client_ip == client_ip) {
-            out_index = i;
+            return i;
+            break;
         }
     } else {
-        out_index = i;
+        return i;
     }
 }
 
-return out_index;
+return -1;
