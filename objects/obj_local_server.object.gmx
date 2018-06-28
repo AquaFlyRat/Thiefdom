@@ -100,7 +100,7 @@ for(var i = 0; i &lt; array_length_1d(self.clients_list); i++) {
         client.time_since_last_packet = client.time_since_last_packet + 1;
         if(client.time_since_last_packet &gt;= NET_TIMEOUT_SECONDS) {
             debug_message("Client disconnected - port: " + string(client.client_port));
-            self.clients_list[i] = noone;
+            server_remove_client(self, i);
         }
     }
 }
@@ -145,6 +145,13 @@ if(socket_id == self.server_id) {
             
             var packet_type = buffer_read(in_buffer, buffer_u16);
             switch(packet_type) {
+            case NET_PCK_CONNECTION_DISCONNECT:
+                var client_index = server_find_client_slot(self, client_ip);
+                if(self.clients_list[client_index] != noone) {
+                    server_remove_client(self, client_index);
+                    debug_message("Clean disconnect for client: " + string(client_index));
+                }
+                break;
             case NET_PCK_CONNECTION_REQUEST:
                 var i = server_find_client_slot(self, client_ip);
                 
@@ -162,9 +169,12 @@ if(socket_id == self.server_id) {
                         client_obj.client_ip = client_ip;
                         client_obj.client_port = client_port;
                         self.clients_list[i] = client_obj;
+                        
+                        debug_message("Server: Client connected!");
                     }
                 } else {
                     msg_type = NET_PCK_CONNECTION_REJECTED;
+                    debug_message("Server: Client rejected!");
                 }
                                 
                 self.send_buffer = prepare_packet_buffer(self.send_buffer, msg_type);

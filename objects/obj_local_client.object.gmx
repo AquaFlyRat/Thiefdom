@@ -184,7 +184,32 @@ if(socket_id == self.socket_id) {
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>network_destroy(self.socket_id);
+            <string>client_net_clean_disconnect(self);
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="9" enumb="96">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>client_net_clean_disconnect(self);
+instance_destroy();
+btn_start_client.started = false;
 </string>
           </argument>
         </arguments>

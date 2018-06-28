@@ -1,4 +1,4 @@
-/// udp_send(game_socket, buffer, size)
+/// udp_send_to_server(game_socket, buffer, size)
 
 var game_socket = argument0; // The socket created by the `connect_to_server` call
 var buffer = argument1;
