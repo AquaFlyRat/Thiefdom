@@ -89,16 +89,17 @@ alarm[0] = room_speed;
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>// Should run once a second.
+            <string>/// Clients timeout handler
+
+// Should run once a second.
 
 for(var i = 0; i &lt; array_length_1d(self.clients_list); i++) {
     var client = self.clients_list[i];
     
     if(client != noone) {
         client.time_since_last_packet = client.time_since_last_packet + 1;
-        debug_message(string(client.time_since_last_packet));
         if(client.time_since_last_packet &gt;= NET_TIMEOUT_SECONDS) {
-            show_message("Client disconnected - port: " + string(client.client_port));
+            debug_message("Client disconnected - port: " + string(client.client_port));
             self.clients_list[i] = noone;
         }
     }
@@ -146,8 +147,7 @@ if(socket_id == self.server_id) {
             switch(packet_type) {
             case NET_PCK_CONNECTION_REQUEST:
                 var i = server_find_client_slot(self, client_ip);
-                debug_message(string(i));
-                    
+                
                 // Determine the type of response we will be sending back to the client
                 // e.g. If there is free space in the clients array (or the client is already in the array)
                 // then accept the request, otherwise reject it.
