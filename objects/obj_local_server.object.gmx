@@ -182,6 +182,23 @@ if(socket_id == self.server_id) {
                 var i = server_find_client_slot(self, client_ip);
                 var client = self.clients_list[i];
                 client.time_since_last_packet = 0;
+                
+                var data_pck_type = buffer_read(in_buffer, buffer_u16);
+                switch(data_pck_type) {
+                case NET_PCK_CLIENT_INPUT_DATA:
+                    var hs = buffer_read(in_buffer, buffer_s16);
+                    var vs = buffer_read(in_buffer, buffer_s16);
+                    debug_message("HS: " + string(hs) + ", VS: " + string(vs));
+                    var cp = client.client_player;
+                    if(hs !=0) {
+                        cp.hspd = lerp(cp.hspd,hs*cp.run_speed,.1) 
+                    } else {
+                        cp.hspd = lerp(cp.hspd,0,.5)
+                    }
+                    cp.x += cp.hspd;
+                    break;
+                }
+                
                 break;
             case NET_PCK_CONNECTION_DISCONNECT:
                 var client_index = server_find_client_slot(self, client_ip);

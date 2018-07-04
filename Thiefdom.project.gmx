@@ -76,6 +76,7 @@
         <script>scripts\udp_send_to_server.gml</script>
         <script>scripts\client_start_requesting_connection.gml</script>
         <script>scripts\client_net_clean_disconnect.gml</script>
+        <script>scripts\package_client_move_data_into_buffer.gml</script>
       </scripts>
       <script>scripts\prepare_packet_buffer.gml</script>
     </scripts>
@@ -115,7 +116,7 @@
     <room>rooms\rm_menu</room>
     <room>rooms\rm_test</room>
   </rooms>
-  <constants number="17">
+  <constants number="18">
     <constant name="NET_MAX_CLIENTS">3</constant>
     <constant name="NET_CLIENT_UPDATE_SPD">15</constant>
     <constant name="DEBUG_LOG_HEIGHT">100</constant>
@@ -130,6 +131,7 @@
     <constant name="NET_PCK_CONNECTION_REJECTED">13</constant>
     <constant name="NET_PCK_CONNECTION_DISCONNECT">14</constant>
     <constant name="NET_PCK_DATA">15</constant>
+    <constant name="NET_PCK_CLIENT_INPUT_DATA">16</constant>
     <constant name="NET_CLIENT_REQUESTING_CONNECTION">21</constant>
     <constant name="NET_CLIENT_CONNECTED">22</constant>
     <constant name="NET_CLIENT_DISCONNECTED">23</constant>

@@ -98,7 +98,7 @@ alarm[1] = room_speed;
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>/// Handle NET_CLIENT_REQUESTING_CONNECTION state
+            <string>/// Handle sending updates to the server. (started from client_start_requesting_connection)
 
 // If the clients is requesting connection
 // Then send packets continiously to the server until the
@@ -113,10 +113,15 @@ if(state == NET_CLIENT_REQUESTING_CONNECTION) {
 
 if(state == NET_CLIENT_CONNECTED) {
     self.send_buffer = prepare_packet_buffer(self.send_buffer, NET_PCK_DATA);
-    udp_send_to_server(self.socket_id, self.send_buffer, 6);
+    
+    var packaged_move_data = package_client_move_data_into_buffer(self.send_buffer);
+    self.send_buffer = packaged_move_data[0];
+    
+    var size = 6 + packaged_move_data[1];
+    udp_send_to_server(self.socket_id, self.send_buffer, size);
 }
 
-alarm[0] = room_speed * (1 / NET_CLIENT_UPDATE_SPD);
+alarm[0] = room_speed * (1 / (NET_CLIENT_UPDATE_SPD*1));
     
 </string>
           </argument>
