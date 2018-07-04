@@ -4,7 +4,7 @@
   <solid>0</solid>
   <visible>-1</visible>
   <depth>0</depth>
-  <persistent>0</persistent>
+  <persistent>-1</persistent>
   <parentName>&lt;undefined&gt;</parentName>
   <maskName>&lt;undefined&gt;</maskName>
   <events>
@@ -69,7 +69,9 @@ if(self.state == NET_CLIENT_CONNECTED) {
         self.state = NET_CLIENT_DISCONNECTED;
         network_destroy(self.socket_id);
         instance_destroy();
-        btn_start_client.started = false;
+        if(instance_exists(btn_start_client)) {
+            btn_start_client.started = false;
+        }
     }
 }
 
@@ -107,10 +109,15 @@ if(state == NET_CLIENT_REQUESTING_CONNECTION) {
     buffer_write(self.send_buffer, buffer_u16, NET_PCK_CONNECTION_REQUEST);
     
     udp_send_to_server(self.socket_id, self.send_buffer, 6);
-    
-    alarm[0] = room_speed * (1 / NET_CLIENT_UPDATE_SPD);
 }
 
+if(state == NET_CLIENT_CONNECTED) {
+    self.send_buffer = prepare_packet_buffer(self.send_buffer, 0);
+    udp_send_to_server(self.socket_id, self.send_buffer, 6);
+}
+
+alarm[0] = room_speed * (1 / NET_CLIENT_UPDATE_SPD);
+    
 </string>
           </argument>
         </arguments>
