@@ -26,6 +26,7 @@
       <sprite>sprites\spr_player_test</sprite>
       <sprite>sprites\spr_solid_test</sprite>
       <sprite>sprites\spr_stair_test</sprite>
+      <sprite>sprites\spr_pallette</sprite>
     </sprites>
   </sprites>
   <backgrounds name="background">
