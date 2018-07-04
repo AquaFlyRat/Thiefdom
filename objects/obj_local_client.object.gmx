@@ -29,6 +29,51 @@
 state = NET_CLIENT_DISCONNECTED;
 
 send_buffer = buffer_create(1024, buffer_fixed, 1);
+
+time_since_last_packet = 0;
+
+alarm[1] = room_speed;
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="2" enumb="1">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>/// Timeout handler
+
+/*
+This alarm runs once a second to keep track of when the last
+packet was recieved from the server. 
+*/
+
+self.time_since_last_packet = self.time_since_last_packet + 1;
+if(self.state == NET_CLIENT_CONNECTED) {
+    if(self.time_since_last_packet &gt; NET_TIMEOUT_SECONDS) {
+        debug_message("Client timed out!");
+        self.state = NET_CLIENT_DISCONNECTED;
+        network_destroy(self.socket_id);
+        instance_destroy();
+        btn_start_client.started = false;
+    }
+}
+
+alarm[1] = room_speed;
 </string>
           </argument>
         </arguments>
@@ -102,16 +147,69 @@ if(socket_id == self.socket_id) {
             var msg_type = buffer_read(in_buffer, buffer_u16);
             switch(msg_type) {
             case NET_PCK_CONNECTION_ACCEPTED:
-                show_message("Client connection request accepted!");
+                if(self.state != NET_CLIENT_CONNECTED)
+                    debug_message("Client connection request accepted!");
+                self.state = NET_CLIENT_CONNECTED;
                 break;
             case NET_PCK_CONNECTION_REJECTED:
-                show_message("Client connection request rejected!");
+                debug_message("Client connection request rejected!");
+                self.state = NET_CLIENT_DISCONNECTED;
+            default:
+                self.time_since_last_packet = 0;
             }
         }
         
         break;
     }
 }
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="7" enumb="3">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>client_net_clean_disconnect(self);
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="9" enumb="96">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>client_net_clean_disconnect(self);
+instance_destroy();
+btn_start_client.started = false;
 </string>
           </argument>
         </arguments>

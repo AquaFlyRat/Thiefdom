@@ -70,11 +70,13 @@
       <scripts name="server">
         <script>scripts\create_server.gml</script>
         <script>scripts\server_find_client_slot.gml</script>
+        <script>scripts\server_remove_client.gml</script>
       </scripts>
       <scripts name="client">
         <script>scripts\create_client_socket.gml</script>
         <script>scripts\udp_send_to_server.gml</script>
         <script>scripts\client_start_requesting_connection.gml</script>
+        <script>scripts\client_net_clean_disconnect.gml</script>
       </scripts>
       <script>scripts\prepare_packet_buffer.gml</script>
     </scripts>
@@ -113,10 +115,11 @@
     <room>rooms\rm_menu</room>
     <room>rooms\rm_test</room>
   </rooms>
-  <constants number="14">
+  <constants number="16">
     <constant name="NET_MAX_CLIENTS">3</constant>
     <constant name="NET_CLIENT_UPDATE_SPD">15</constant>
     <constant name="DEBUG_LOG_HEIGHT">100</constant>
+    <constant name="NET_TIMEOUT_SECONDS">5</constant>
     <constant name="DEBUG_LOG_TXT_SCALE">0.5</constant>
     <constant name="DEBUG_LOG_WIDTH">250</constant>
     <constant name="NET_CLIENT_PORT">6511</constant>
@@ -125,6 +128,7 @@
     <constant name="NET_PCK_CONNECTION_REQUEST">11</constant>
     <constant name="NET_PCK_CONNECTION_ACCEPTED">12</constant>
     <constant name="NET_PCK_CONNECTION_REJECTED">13</constant>
+    <constant name="NET_PCK_CONNECTION_DISCONNECT">14</constant>
     <constant name="NET_CLIENT_REQUESTING_CONNECTION">21</constant>
     <constant name="NET_CLIENT_CONNECTED">22</constant>
     <constant name="NET_CLIENT_DISCONNECTED">23</constant>

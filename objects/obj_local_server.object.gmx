@@ -40,6 +40,10 @@ for(var i = 0; i &lt; NET_MAX_CLIENTS; i++) {
 }
 
 send_buffer = buffer_create(1024, buffer_fixed, 1);
+
+// This starts the alarm that runs once a second to check for a client timeout
+// e.g a message from the client has not been recieved for 5 seconds or more.
+alarm[0] = room_speed;
 </string>
           </argument>
         </arguments>
@@ -63,6 +67,45 @@ send_buffer = buffer_create(1024, buffer_fixed, 1);
           <argument>
             <kind>1</kind>
             <string>network_destroy(self.server_id);
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="2" enumb="0">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>/// Clients timeout handler
+
+// Should run once a second.
+
+for(var i = 0; i &lt; array_length_1d(self.clients_list); i++) {
+    var client = self.clients_list[i];
+    
+    if(client != noone) {
+        client.time_since_last_packet = client.time_since_last_packet + 1;
+        if(client.time_since_last_packet &gt;= NET_TIMEOUT_SECONDS) {
+            debug_message("Client disconnected - port: " + string(client.client_port));
+            server_remove_client(self, i);
+        }
+    }
+}
+
+alarm[0] = room_speed;
 </string>
           </argument>
         </arguments>
@@ -97,32 +140,55 @@ if(socket_id == self.server_id) {
         
         // Only process packets intented for us
         if(header_uid == NET_PACKET_UID) {
-            // Process packet
+            var client_ip = async_load[? "ip"];
+            var client_port = async_load[? "port"]; 
             
             var packet_type = buffer_read(in_buffer, buffer_u16);
             switch(packet_type) {
+            case NET_PCK_CONNECTION_DISCONNECT:
+                var client_index = server_find_client_slot(self, client_ip);
+                if(self.clients_list[client_index] != noone) {
+                    server_remove_client(self, client_index);
+                    debug_message("Clean disconnect for client: " + string(client_index));
+                }
+                break;
             case NET_PCK_CONNECTION_REQUEST:
-                var client_ip = async_load[? "ip"];
-                var client_port = async_load[? "port"];            
-                
                 var i = server_find_client_slot(self, client_ip);
                 
                 // Determine the type of response we will be sending back to the client
-               
+                // e.g. If there is free space in the clients array (or the client is already in the array)
+                // then accept the request, otherwise reject it.
                 var msg_type = NET_PCK_CONNECTION_ACCEPTED;
                 
-                if(i &gt; 0) {
-                    var client_obj = create_object(obj_server_client);
-                    client_obj.client_ip = client_ip;
-                    client_obj.client_port = client_port;
-                
-                    self.clients_list[i] = client_obj;
+                if(i &gt;= 0) {
+                    // This is taking into account that we may have already created the client object
+                    // (remembering that if the incoming client is already in the array then we should still return
+                    //  NET_PCK_CONNECTION_ACCEPTED)
+                    if(self.clients_list[i] == noone) {
+                        var client_obj = create_object(obj_server_client);
+                        client_obj.client_ip = client_ip;
+                        client_obj.client_port = client_port;
+                        self.clients_list[i] = client_obj;
+                        
+                        debug_message("Server: Client connected!");
+                    }
                 } else {
                     msg_type = NET_PCK_CONNECTION_REJECTED;
+                    debug_message("Server: Client rejected!");
                 }
                                 
                 self.send_buffer = prepare_packet_buffer(self.send_buffer, msg_type);
-                network_send_udp(self.server_id, client_ip, client_port, self.send_buffer, 6);
+                
+                // Lets just send this packet 5 times to increase the chances that one packet gets through.
+                // TODO: We should probably handle this situation properly.
+                repeat(5) {
+                    network_send_udp(self.server_id, client_ip, client_port, self.send_buffer, 6);
+                }
+                break;
+            default:
+                var i = server_find_client_slot(self, client_ip);
+                var client = self.clients_list[i];
+                client.time_since_last_packet = 0;
                 break;
             }
         }
