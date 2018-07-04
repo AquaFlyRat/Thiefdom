@@ -103,6 +103,7 @@
       <objects name="server">
         <object>objects\obj_local_server</object>
         <object>objects\obj_server_client</object>
+        <object>objects\obj_server_player</object>
       </objects>
       <objects name="client">
         <object>objects\obj_local_client</object>
@@ -114,7 +115,7 @@
     <room>rooms\rm_menu</room>
     <room>rooms\rm_test</room>
   </rooms>
-  <constants number="16">
+  <constants number="17">
     <constant name="NET_MAX_CLIENTS">3</constant>
     <constant name="NET_CLIENT_UPDATE_SPD">15</constant>
     <constant name="DEBUG_LOG_HEIGHT">100</constant>
@@ -128,6 +129,7 @@
     <constant name="NET_PCK_CONNECTION_ACCEPTED">12</constant>
     <constant name="NET_PCK_CONNECTION_REJECTED">13</constant>
     <constant name="NET_PCK_CONNECTION_DISCONNECT">14</constant>
+    <constant name="NET_PCK_DATA">15</constant>
     <constant name="NET_CLIENT_REQUESTING_CONNECTION">21</constant>
     <constant name="NET_CLIENT_CONNECTED">22</constant>
     <constant name="NET_CLIENT_DISCONNECTED">23</constant>

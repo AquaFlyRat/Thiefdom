@@ -93,7 +93,7 @@ alarm[1] = room_speed * (1 / NET_CLIENT_UPDATE_SPD);
             <kind>1</kind>
             <string>for(var i = 0; i &lt; array_length_1d(self.clients_list); i++) {
     if(self.clients_list[i] != noone) {
-        self.send_buffer = prepare_packet_buffer(self.send_buffer, 0);
+        self.send_buffer = prepare_packet_buffer(self.send_buffer, NET_PCK_DATA);
         
         network_send_udp_raw(self.server_id, self.clients_list[i].client_ip, self.clients_list[i].client_port, self.send_buffer, 6);
     }
@@ -178,6 +178,11 @@ if(socket_id == self.server_id) {
             
             var packet_type = buffer_read(in_buffer, buffer_u16);
             switch(packet_type) {
+            case NET_PCK_DATA:
+                var i = server_find_client_slot(self, client_ip);
+                var client = self.clients_list[i];
+                client.time_since_last_packet = 0;
+                break;
             case NET_PCK_CONNECTION_DISCONNECT:
                 var client_index = server_find_client_slot(self, client_ip);
                 if(self.clients_list[client_index] != noone) {
@@ -222,11 +227,6 @@ if(socket_id == self.server_id) {
                 repeat(5) {
                     network_send_udp_raw(self.server_id, client_ip, client_port, self.send_buffer, 6);
                 }
-                break;
-            default:
-                var i = server_find_client_slot(self, client_ip);
-                var client = self.clients_list[i];
-                client.time_since_last_packet = 0;
                 break;
             }
         }

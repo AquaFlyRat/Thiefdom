@@ -112,7 +112,7 @@ if(state == NET_CLIENT_REQUESTING_CONNECTION) {
 }
 
 if(state == NET_CLIENT_CONNECTED) {
-    self.send_buffer = prepare_packet_buffer(self.send_buffer, 0);
+    self.send_buffer = prepare_packet_buffer(self.send_buffer, NET_PCK_DATA);
     udp_send_to_server(self.socket_id, self.send_buffer, 6);
 }
 
@@ -161,7 +161,7 @@ if(socket_id == self.socket_id) {
             case NET_PCK_CONNECTION_REJECTED:
                 debug_message("Client connection request rejected!");
                 self.state = NET_CLIENT_DISCONNECTED;
-            default:
+            case NET_PCK_DATA:
                 self.time_since_last_packet = 0;
             }
         }
