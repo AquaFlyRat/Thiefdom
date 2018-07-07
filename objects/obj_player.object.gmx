@@ -32,6 +32,7 @@ hspd = 0;
 vspd = 0;
 slide = 0;
 climb = 0;
+drop = 0;
 grab = 0;
 sheight = 3;
 run_speed = 4;
@@ -65,9 +66,20 @@ animpause = 0;
             <string>///movement
 var hs = (keyboard_check_direct(vk_right)-keyboard_check_direct(vk_left));
 var jmp = (keyboard_check_pressed(vk_up));
+var drp = (keyboard_check_pressed(vk_down));
 var vs = (keyboard_check_direct(vk_down)-keyboard_check_direct(vk_up));
 if hs !=0{hspd = lerp(hspd,hs*run_speed,.1)}else{hspd = lerp(hspd,0,.5)}
 if slide || grab{hspd = 0;}
+drop = 0;
+if drp{
+    if place_meeting(x,y+1,obj_thrusolid){
+        var in = instance_place(x,y+1,obj_thrusolid);
+        in.mask = 0;
+        drop = 1;
+        vspd = 3;
+        y++;
+    }
+}
 //grav, jump
 if (!slide &amp;&amp; !climb &amp;&amp; !grab){
     vspd+=grav;
@@ -75,7 +87,7 @@ if (!slide &amp;&amp; !climb &amp;&amp; !grab){
     if slide{vspd = slide_speed}
     if grab || climb{vspd = 0}
 }
-if (place_meeting(x,y+1,obj_solid) || place_meeting(x-(hs*8),y+1,obj_solid)) &amp;&amp; jmp{
+if (place_meeting(x,y+1,obj_solid) || place_meeting(x-(hs*8),y+1,obj_solid) || (place_meeting(x,y+vspd,obj_thrusolid) &amp;&amp; instance_place(x,y+vspd,obj_thrusolid).mask==1)) &amp;&amp; jmp{
     vspd=-jump_speed;
 }
 //slide
@@ -143,6 +155,12 @@ if place_meeting(x,y+vspd,obj_solid){
     }
     vspd = 0;
 }
+if place_meeting(x,y+vspd,obj_thrusolid) &amp;&amp; instance_place(x,y+vspd,obj_thrusolid).mask==1{     ///mask
+    while !place_meeting(x,y+sign(vspd),obj_thrusolid){
+        y+=sign(vspd);
+    }
+    vspd = 0;
+}
 y+=vspd;
 </string>
           </argument>
@@ -170,9 +188,9 @@ if hspd!=0{
 }
 var spec = 0;
 if slide || climb || grab{spec = 1;}
-if !place_meeting(x,y+1,obj_solid){
+if !place_meeting(x,y+1,obj_solid) &amp;&amp; !(place_meeting(x,y+1,obj_thrusolid) &amp;&amp; instance_place(x,y+1,obj_thrusolid).mask==1){
     if !spec{
-        if vspd&lt;=0 || !collision_line(x,y,x,y+120,obj_solid,0,1){
+        if vspd&lt;=0 || (!collision_line(x,y,x,y+120,obj_solid,0,1) &amp;&amp; !collision_line(x,y,x,y+120,obj_thrusolid,0,1)){
             sprite_index = spr_player_jumphang;
             animpause = 1;
         }else{

@@ -25,6 +25,7 @@
       <sprite>sprites\spr_barrel</sprite>
       <sprite>sprites\spr_player_test</sprite>
       <sprite>sprites\spr_solid_test</sprite>
+      <sprite>sprites\spr_thru_test</sprite>
       <sprite>sprites\spr_stair_test</sprite>
       <sprite>sprites\spr_pallette</sprite>
     </sprites>
@@ -98,6 +99,7 @@
     <objects name="main">
       <object>objects\obj_stair</object>
       <object>objects\obj_solid</object>
+      <object>objects\obj_thrusolid</object>
       <object>objects\obj_player</object>
     </objects>
     <objects name="net">
