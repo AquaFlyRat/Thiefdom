@@ -73,6 +73,7 @@ if (abs(mousex-(textx+textw/2))&lt;textw/2 &amp;&amp; (mousey &gt; texty-texth /
         client_instance.socket_id = create_client_socket();
         
         client_start_requesting_connection(client_instance);
+        room_goto(rm_test);
     }
     
     self.started = true;
